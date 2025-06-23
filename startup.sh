@@ -5,7 +5,7 @@
 
 cd /tracking
 java -jar trakingServer.jar server_40028.conf 1>> /srv/www/tracking/log40028.log 2>> /srv/www/tracking/log40028.log &
-java -jar trakingServer.jar server_40022.conf 1>> /srv/www/tracking/log40022.log 2>> /srv/www/tracking/log40022.log &
+java -jar trakingServerTx.jar server_40022.conf 1>> /srv/www/tracking/log40022.log 2>> /srv/www/tracking/log40022.log &
 
 # Start the second Java process in background
 cd /rt_mqtt
