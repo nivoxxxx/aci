@@ -8,6 +8,7 @@ start_services() {
     # Start the first Java process in background
     cd /tracking
     java -jar trakingServer.jar server_40028.conf 1> /srv/www/tracking/log40028.log 2> /srv/www/tracking/log40028.log &
+    java -jar trakingServer.jar server_40022.conf 1> /srv/www/tracking/log40022.log 2> /srv/www/tracking/log40022.log &
 
     # Start the second Java process in background
     cd /rt_mqtt
@@ -24,7 +25,7 @@ start_services() {
 stop_services() {
     echo "Stopping services..."
     # Find and kill all java processes (except mosquitto)
-    pids=$(pgrep -f "java.*(trakingServer.jar|CollectorRTMQTT.jar|PathCollector.jar)")
+    pids=$(pgrep -f "java.*(CollectorRTMQTT.jar|PathCollector.jar)")
     if [ -n "$pids" ]; then
         kill $pids
         echo "Stopped Java services"
@@ -40,9 +41,6 @@ restart_services() {
 
     echo "Starting services..."
 
-    # Start the first Java process in background
-    cd /tracking
-    java -jar trakingServer.jar server_40028.conf 1> /srv/www/tracking/log40028.log 2> /srv/www/tracking/log40028.log &
 
     # Start the second Java process in background
     cd /rt_mqtt
