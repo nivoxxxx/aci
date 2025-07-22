@@ -7,6 +7,7 @@ start_services() {
     echo "Starting services..."
     # Start the first Java process in background
     cd /tracking
+    java -jar trakingServer.jar server_40029.conf 1> /srv/www/tracking/log40029.log 2> /srv/www/tracking/log40029.log &
     java -jar trakingServer.jar server_40028.conf 1> /srv/www/tracking/log40028.log 2> /srv/www/tracking/log40028.log &
     java -jar trakingServer.jar server_40022.conf 1> /srv/www/tracking/log40022.log 2> /srv/www/tracking/log40022.log &
 
@@ -40,8 +41,20 @@ restart_services() {
     sleep 1  # Brief pause between stop and start
 
     echo "Starting services..."
+    # Check and start 40028 server if not running
+    if ! pgrep -f "java -jar trakingServer.jar server_40028.conf" > /dev/null; then
+        (cd /tracking && java -jar trakingServer.jar server_40028.conf >> /srv/www/tracking/log40028.log 2>&1 &)
+    fi
 
+    # Check and start 40022 server if not running
+    if ! pgrep -f "java -jar trakingServer.jar server_40022.conf" > /dev/null; then
+        (cd /tracking && java -jar trakingServer.jar server_40022.conf >> /srv/www/tracking/log40022.log 2>&1 &)
+    fi
 
+    # Check and start 40029 server if not running
+    if ! pgrep -f "java -jar trakingServer.jar server_40029.conf" > /dev/null; then
+        (cd /tracking && java -jar trakingServer.jar server_40029.conf >> /srv/www/tracking/log40029.log 2>&1 &)
+    fi
     # Start the second Java process in background
     cd /rt_mqtt
     java -XX:+UseSerialGC -jar CollectorRTMQTT.jar 1>> /srv/www/tracking/log_succcess_rtm.log 2>> /srv/www/tracking/log_err_rtm.log &

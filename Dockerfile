@@ -27,7 +27,6 @@ RUN chmod 644 /etc/logrotate.d/collectors
 # Create cron job to run startup.sh every hour
 RUN echo "0 * * * * /startup.sh restart " >> /etc/crontabs/root
 RUN echo "*/10 * * * * logrotate  /etc/logrotate.d/collectors" >> /etc/crontabs/root
-#RUN echo "* * * * * logrotate  /etc/logrotate.d/collectors" >> /etc/crontabs/root
 
 
 
