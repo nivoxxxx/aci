@@ -9,7 +9,7 @@ RUN mkdir -p /srv/www/tracking
 
 # Configure Mosquitto
 #RUN echo -e "\nlistener 1883 0.0.0.0\nallow_anonymous true" >> /mosquitto/config/mosquitto.conf
-RUN echo "\nlistener 1883 0.0.0.0" >> /mosquitto/config/mosquitto.conf && \
+RUN echo "listener 1883 0.0.0.0" >> /mosquitto/config/mosquitto.conf && \
     echo "listener 1884 0.0.0.0" >> /mosquitto/config/mosquitto.conf && \
     echo "protocol websockets" >> /mosquitto/config/mosquitto.conf && \
     echo "allow_anonymous true" >> /mosquitto/config/mosquitto.conf
