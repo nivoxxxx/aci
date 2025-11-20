@@ -57,6 +57,8 @@ restart_services() {
     fi
     # Start the second Java process in background
     cd /rt_mqtt
+    rm -rf /rt_mqtt/RT*
+
     java -XX:+UseSerialGC -jar CollectorRTMQTT.jar 1>> /srv/www/tracking/log_succcess_rtm.log 2>> /srv/www/tracking/log_err_rtm.log &
 
     cd /path

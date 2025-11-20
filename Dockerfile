@@ -8,9 +8,13 @@ RUN apk update && apk add openjdk8 logrotate cronie
 RUN mkdir -p /srv/www/tracking
 
 # Configure Mosquitto
-RUN echo -e "\nlistener 1883 0.0.0.0\nallow_anonymous true" >> /mosquitto/config/mosquitto.conf
+#RUN echo -e "\nlistener 1883 0.0.0.0\nallow_anonymous true" >> /mosquitto/config/mosquitto.conf
+RUN echo "\nlistener 1883 0.0.0.0" >> /mosquitto/config/mosquitto.conf && \
+    echo "listener 1884 0.0.0.0" >> /mosquitto/config/mosquitto.conf && \
+    echo "protocol websockets" >> /mosquitto/config/mosquitto.conf && \
+    echo "allow_anonymous true" >> /mosquitto/config/mosquitto.conf
 EXPOSE 1883
-
+EXPOSE 1884
 # Copy your files into the container
 COPY rt_mqtt /rt_mqtt
 COPY tracking /tracking
